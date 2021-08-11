@@ -147,8 +147,8 @@ return [
     */
 
     'attributes' => [
-        'title' => 'タイトル',
-        'content' => 'ブログ内容',
+        'email' => 'メールアドレス',
+        'password' => 'パスワード',
     ],
 
 ];
