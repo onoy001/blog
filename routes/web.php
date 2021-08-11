@@ -13,9 +13,24 @@ use App\Http\Controllers\Auth\AuthController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [AuthController::class, 'showLogin'])->name('showLogin');
+Route::middleware(['guest'])->group(function () {
 
-Route::post('login/login', [AuthController::class, 'login'])->name('login');
+    //ログインフォーム表示
+    Route::get('/', [AuthController::class, 'showLogin'])->name('login.show');
+
+    //ログイン処理
+    Route::post('login/login', [AuthController::class, 'login'])->name('login');
+});
+
+Route::middleware(['auth'])->group(function () {
+    //ホーム画面
+    Route::get('home', function(){
+        return view('home');
+    })->name('home');
+
+    //ログアウト
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+});
 
 // //ブログ一覧画面を表示
 // Route::get('/', [BlogController::class, 'showList'])->name('blogs');
