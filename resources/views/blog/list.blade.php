@@ -33,9 +33,16 @@
               <form method="POST" action="{{ route('delete', $blog->id) }}" onSubmit="return checkDelete()">
             　@csrf
               <td><button type="submit" class="btn btn-primary">削除</button></td> 
+              </form>
           </tr>
           @endforeach
       </table>
+  </div>
+  <div class="col-md-2 col-md-offset-2">
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button class="btn btn-danger">ログアウト</button>
+    </form>
   </div>
 </div>
 <script>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,33 +24,31 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    //ホーム画面
-    Route::get('home', function(){
-        return view('home');
-    })->name('home');
+
+    //ブログ一覧画面を表示
+    Route::get('blog/', [BlogController::class, 'showList'])->name('blogs');
 
     //ログアウト
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-// //ブログ一覧画面を表示
-// Route::get('/', [BlogController::class, 'showList'])->name('blogs');
 
-// //ブログ登録画面を表示
-// Route::get('blog/create', [BlogController::class, 'showCreate'])->name('create');
 
-// //ブログ登録
-// Route::post('blog/store', [BlogController::class, 'exeStore'])->name('store');
+//ブログ登録画面を表示
+Route::get('blog/create', [BlogController::class, 'showCreate'])->name('create');
 
-// //ブログ詳細画面を表示
-// Route::get('blog/{id}', [BlogController::class, 'showDetail'])->name('show');
+//ブログ登録
+Route::post('blog/store', [BlogController::class, 'exeStore'])->name('store');
 
-// //ブログ編集画面を表示
-// Route::get('blog/edit/{id}', [BlogController::class, 'showEdit'])->name('edit');
-// Route::post('blog/update', [BlogController::class, 'exeUpdate'])->name('update');
+//ブログ詳細画面を表示
+Route::get('blog/{id}', [BlogController::class, 'showDetail'])->name('show');
 
-// //ブログ削除
-// Route::post('blog/delete/{id}', [BlogController::class, 'exeDelete'])->name('delete');
+//ブログ編集画面を表示
+Route::get('blog/edit/{id}', [BlogController::class, 'showEdit'])->name('edit');
+Route::post('blog/update', [BlogController::class, 'exeUpdate'])->name('update');
+
+//ブログ削除
+Route::post('blog/delete/{id}', [BlogController::class, 'exeDelete'])->name('delete');
 
 // Route::get('/', function () {
 //     return view('welcome');

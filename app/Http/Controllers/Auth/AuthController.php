@@ -7,6 +7,7 @@ use App\Http\Requests\LoginFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Blog;
 
 class AuthController extends Controller
 {
@@ -41,8 +42,10 @@ class AuthController extends Controller
             if(Auth::attempt($credentials)){
                 $request->session()->regenerate();
                 $this->user->resetErrorCount($user);
-                
-                return redirect()->route('home')->with('success','ログイン成功しました！');
+                // return redirect()->route('home')->with('success','ログイン成功しました！');
+                // return $this->showList();
+                return redirect()->route('blogs')->with('success','ログイン成功しました！');
+                // return redirect(route('list',['blogs'=>$blogs]));
             }
 
             $user->error_count = $this->user->addErrorCount($user->error_count);
@@ -74,5 +77,17 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login.show')->with('danger','ログアウトしました！');
+    }
+
+    /**
+     * ブログ一覧を表示する
+     * 
+     * @return view
+     */
+    public function showList()
+    {
+        $blogs = Blog::all();
+
+        return view('blog.list', ['blogs'=>$blogs]);
     }
 }
